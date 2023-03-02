@@ -1,9 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct {
+    int no;
+    char nama[20];
+    float nilai;
+}Data;
+
 typedef struct simpul Node;
 struct simpul {
-    int data;
+    Data siswa;
     Node *next;
 };
 
@@ -20,7 +26,7 @@ int main() {
     do
     {
         alokasi();
-        printf("Tambah Data ? [1/0] :");
+        printf("Tambah data ? [1/0] : ");
         scanf("%d", &x);
         insertAkhir();
     } while (x == 1);
@@ -28,36 +34,44 @@ int main() {
     tampil();
 }
 
+void alokasi(){
+    p = (Node *)malloc(sizeof(Node));
+    printf("Masukan no siswa : ");
+    scanf("%d", &p->siswa.no);
+    printf("Masukan nama siswa : ");
+    fflush(stdin);
+    gets(p->siswa.nama);
+    printf("Berapa nilai siswa : ");
+    scanf("%f", &p->siswa.nilai);
+    p->next = NULL;
+}
+
 void tampil() {
     Node *baca;
     baca = head;
+    printf("No\t Nama\t Nilai\n");
     while(baca != NULL) {
-        printf("%d", baca->data);
+        printf("%d\t", baca->siswa.no);
+        printf("%s\t", baca->siswa.nama);
+        printf("%.2f\t", baca->siswa.nilai);
+        printf("\n");
         baca = baca->next;
     }
 }
 
-void alokasi() {
-    p = (Node *)malloc(sizeof(Node));
-    printf("Masukan data yang dimasukkan : ");
-    scanf("%d", &p->data);
-    p->next = NULL;
-}
-
 void insertAkhir() {
-    Node *tail;
     if(head == NULL) {
         head = p;
     }
     else {
+        Node *tail;
         tail = head;
-        while(tail->next  != NULL) {
+        while(tail->next != NULL) {
             tail = tail->next;
         }
         tail->next = p;
-    }
+    }   
 }
-
 void insertBefore() {
     Node *bef;
     Node *pbef;
@@ -65,13 +79,13 @@ void insertBefore() {
     printf("Masukan angka yang ingin disisipi : ");
     scanf("%d", &x);
     alokasi();
-    if(head->data == x) {
+    if(head->siswa.no == x) {
         p->next = head;
         head = p;
     }
     else {
         bef = head;
-        while(bef->data != x) {
+        while(bef->siswa.no != x) {
             if(bef->next == NULL) {
                 puts("Inputan kamu salah bree!");
             }

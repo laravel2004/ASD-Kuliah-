@@ -1,9 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct {
+    int no;
+    char nama[20];
+    float nilai;
+}Data;
+
 typedef struct simpul Node;
 struct simpul {
-    int data;
+    Data siswa;
     Node *next;
 };
 
@@ -12,10 +18,10 @@ Node *p;
 
 void tampil();
 void alokasi();
-void insertAwal();
-void insertAkhir();
-void insertAfter();
 void insertBefore();
+void insertAkhir();
+void insertAwal();
+void insertAfter();
 
 int main() {
     int x;
@@ -67,22 +73,29 @@ int main() {
     }
 }
 
+void alokasi(){
+    p = (Node *)malloc(sizeof(Node));
+    printf("Masukan no siswa : ");
+    scanf("%d", &p->siswa.no);
+    printf("Masukan nama siswa : ");
+    fflush(stdin);
+    gets(p->siswa.nama);
+    printf("Berapa nilai siswa : ");
+    scanf("%f", &p->siswa.nilai);
+    p->next = NULL;
+}
+
 void tampil() {
     Node *baca;
     baca = head;
-    printf("Nilai Yang kamu miliki sekarang : \n");
+    printf("No\t Nama\t Nilai\n");
     while(baca != NULL) {
-        printf("%d\t", baca->data);
-        baca = baca-> next;
+        printf("%d\t", baca->siswa.no);
+        printf("%s\t", baca->siswa.nama);
+        printf("%.2f\t", baca->siswa.nilai);
+        printf("\n");
+        baca = baca->next;
     }
-    printf("\n");
-}
-
-void alokasi() {
-    p = (Node *)malloc(sizeof(Node));
-    printf("Masukan nilai yang dimaksukkan : ");
-    scanf("%d", &p->data);
-    p->next = NULL;
 }
 
 void insertAwal() {
@@ -93,71 +106,61 @@ void insertAwal() {
 }
 
 void insertAkhir() {
-    Node *tail;
     if(head == NULL) {
         head = p;
     }
     else {
+        Node *tail;
         tail = head;
         while(tail->next != NULL) {
             tail = tail->next;
         }
         tail->next = p;
-    }
+    }   
 }
 
 void insertAfter() {
     Node *after;
     int x;
-    if(head == NULL) {
-        puts("pilihan anda salah");
-    }
-    else{
-        printf("Masukan angka yang ingin disisipi : ");
-        scanf("%d", &x);
-        alokasi();
-        after = head;
-        while(after->data != x) {
-            if(after->next == NULL) {
-                puts("Inputanmu salah bree!");
-            }
-            else {
-                after = after->next;
-            }
+    printf("Masukan angka yang ingin disisipi : ");
+    scanf("%d", &x);
+    alokasi();
+    after = head;
+    while(after->siswa.no != x) {
+        if(after->next == NULL) {
+            puts("Inputanmu salah bree!");
         }
-        p->next = after->next;
-        after->next = p;
+        else {
+            after = after->next;
+        }
     }
+    p->next = after->next;
+    after->next = p;
 }
 
 void insertBefore() {
     Node *bef;
     Node *pbef;
     int x;
-    if(head == NULL) {
-        puts("pilihan anda salah");
+    printf("Masukan angka yang ingin disisipi : ");
+    scanf("%d", &x);
+    alokasi();
+    if(head->siswa.no == x) {
+        p->next = head;
+        head = p;
     }
     else {
-        printf("Masukan angka yang ingin disisipi : ");
-        scanf("%d", &x);
-        alokasi();
-        if(head->data == x) {
-            p->next = head;
-            head = p;
-        }
-        else {
-            bef = head;
-            while(bef->data != x) {
-                if(bef->next == NULL) {
-                    puts("Inputan kamu salah bree!");
-                }
-                else {
-                    pbef = bef;
-                    bef = bef->next;
-                }
+        bef = head;
+        while(bef->siswa.no != x) {
+            if(bef->next == NULL) {
+                puts("Inputan kamu salah bree!");
             }
-            p->next = bef;
-            pbef->next = p;
+            else {
+                pbef = bef;
+                bef = bef->next;
+            }
         }
+        p->next = bef;
+        pbef->next = p;
     }
 }
