@@ -8,7 +8,6 @@ typedef struct {
   int count;
 } stack;
 
-
 void inisialisasi(stack *);
 int kosong(stack*);
 int penuh(stack *);

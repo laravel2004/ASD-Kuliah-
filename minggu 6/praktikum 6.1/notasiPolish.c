@@ -25,7 +25,8 @@ int main() {
   int i= 0;
   char data[32];
   inisialisasi(&tumpukan);
-  fgets(data, 30, stdin);
+  fflush(stdin);
+  gets(data);
   konversi_cetak(data);
 }
 
@@ -85,7 +86,7 @@ void konversi_cetak(char temp[])
           break;
         default: 
             valid = 0;
-            puts("INVALID STSTEMEN");
+            puts("INVALID STATSMENT");
             break;
         } 
     }     
