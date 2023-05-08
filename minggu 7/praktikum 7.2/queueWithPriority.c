@@ -60,6 +60,7 @@ void menu()
 
 void enqueue(itemType x, int p)
 {
+    antrian *ptr;
     q = (antrian *) malloc(sizeof(antrian));
     if(q == NULL) {
         puts("Gagal Inisialisasi Queue");
@@ -70,9 +71,7 @@ void enqueue(itemType x, int p)
         q->next = NULL;
     }
 
-    antrian *ptr;
-    if(head == NULL || q->prio < head->prio) { // jika head kosong atau data baru < data head
-        // insert awal
+    if(head == NULL || q->prio < head->prio) { 
         if(head != NULL) {
             q->next = head;
         }
@@ -80,10 +79,8 @@ void enqueue(itemType x, int p)
     } else {
         ptr = head;
         while(ptr->next != NULL && q->prio > ptr->next->prio) {
-            // geser ptr jika bukan node akhir dan data baru > data node setelah ptr
             ptr = ptr->next;
         }
-        // insert after
         q->next = ptr->next;
         ptr->next = q;
     }

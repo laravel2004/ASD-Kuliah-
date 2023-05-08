@@ -155,7 +155,7 @@ void fifo(queue *q)
         int temp = q->front;
         puts("Isi Queue Saat Ini Adalah: ");
         for(int i = 0; i < q->count ; i++) {
-            printf("%c\n", q->item[temp]);
+            printf("%d\n", q->item[temp]);
             temp = (temp + 1) % MAX;
         }
     }
